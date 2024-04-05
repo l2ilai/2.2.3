@@ -3,17 +3,30 @@ package com.example._223.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column
     private Integer income;
 
-    public User(Long id, Integer income) {
-        this.id = id;
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @PrimaryKeyJoinColumn
+    private Car car;
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public User(Integer income, Car car) {
         this.income = income;
+        this.car = car;
     }
 
     public User() {
@@ -38,8 +51,9 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + getId() +
-                ", income=" + getIncome() +
+                "id=" + id +
+                ", income=" + income +
+                ", car=" + car +
                 '}';
     }
 }

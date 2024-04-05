@@ -20,8 +20,10 @@ public class UserController {
 
     @GetMapping
     public String getAllUsers() {
-        List<User> usersList = userService.getUsers();
+        List<User> usersList = userService.getUserWithCar();
+        usersList.forEach(System.out::println);
         userService.saveAll(usersList);
+
         return "income";
     }
 

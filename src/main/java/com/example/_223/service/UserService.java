@@ -1,6 +1,7 @@
 package com.example._223.service;
 
 import com.example._223.dao.UserRepository;
+import com.example._223.model.Car;
 import com.example._223.model.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,17 @@ public class UserService {
         return employeeFlux
                 .collect(Collectors.toList())
                 .share().block();
+    }
+
+    public List<User> getUserWithCar() {
+        List<User> users = getUsers();
+        return users.stream().peek(user ->
+            user.setCar(new Car(getRandomDiceNumber()))).collect(Collectors.toList());
+    }
+
+    public static int getRandomDiceNumber()
+    {
+        return (int) (Math.random() * 200_000) + 900_000;
     }
 
     @Transactional

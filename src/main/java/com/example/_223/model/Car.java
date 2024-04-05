@@ -1,9 +1,14 @@
 package com.example._223.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Comment;
+import org.springframework.stereotype.Component;
+
+import java.util.Random;
 
 @Entity
 @Table(name = "cars")
+@Component
 public class Car {
 
     @Id
@@ -42,5 +47,17 @@ public class Car {
                 "id=" + id +
                 ", price=" + price +
                 '}';
+    }
+
+    public static int getRandomNumber() {
+        return (int) (Math.random() * 200_000) + 900_000;
+    }
+
+    public Car getNewCarOrNull() {
+        Random myRand = new Random();
+        if (myRand.nextBoolean()) {
+            return null;
+        }
+        return new Car(getRandomNumber());
     }
 }

@@ -1,6 +1,8 @@
 package com.example._223.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 @Table(name = "users")
@@ -14,6 +16,7 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL, optional = false)
     @PrimaryKeyJoinColumn
+    @NotFound(action= NotFoundAction.IGNORE)
     private Car car;
 
     public Car getCar() {

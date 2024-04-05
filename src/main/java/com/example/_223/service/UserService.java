@@ -18,6 +18,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private Car car;
+
     public List<User> getUsers() {
         Flux<User> employeeFlux = WebClient
                 .create("https://66055cd12ca9478ea1801f2e.mockapi.io/api/users/income")
@@ -32,13 +35,9 @@ public class UserService {
 
     public List<User> getUserWithCar() {
         List<User> users = getUsers();
-        return users.stream().peek(user ->
-            user.setCar(new Car(getRandomDiceNumber()))).collect(Collectors.toList());
-    }
-
-    public static int getRandomDiceNumber()
-    {
-        return (int) (Math.random() * 200_000) + 900_000;
+        return users.stream()
+                .peek(user -> user.setCar(car.getNewCarOrNull()))
+                .collect(Collectors.toList());
     }
 
     @Transactional

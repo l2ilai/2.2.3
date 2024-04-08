@@ -1,6 +1,6 @@
 package com.example._223.dao;
 
-import com.example._223.model.User;
+import com.example._223.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

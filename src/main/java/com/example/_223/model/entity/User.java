@@ -1,14 +1,15 @@
-package com.example._223.model;
+package com.example._223.model.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
+import org.springframework.stereotype.Component;
 
-import static com.example._223.model.Car.getRandomNumber;
+import static com.example._223.model.entity.Car.getRandomNumber;
 
 @Entity
 @Table(name = "users")
+@Component
 public class User {
+
     @Id
     @Column(name = "id")
     private Long id;
@@ -16,8 +17,8 @@ public class User {
     @Column
     private Integer income;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-    @PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "car_id", referencedColumnName = "id")
     private Car car;
 
     public Car getCar() {
@@ -27,9 +28,7 @@ public class User {
     public void setCar(Car car) {
         this.car = car;
         if (car != null) {
-            this.car.setId(this.getId());
             this.car.setPrice(getRandomNumber());
-            this.car.setUser(this);
         }
     }
 

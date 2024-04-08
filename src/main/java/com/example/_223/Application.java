@@ -1,6 +1,5 @@
 package com.example._223;
 
-import com.example._223.model.Car;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

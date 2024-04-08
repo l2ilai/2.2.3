@@ -1,8 +1,6 @@
-package com.example._223.model;
+package com.example._223.model.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Comment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
@@ -13,15 +11,15 @@ import java.util.Random;
 public class Car {
 
     @Id
-    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
     @Column
     private Integer price;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "user_id")
+
+    @OneToOne(mappedBy = "car")
     private User user;
 
     public Car() {

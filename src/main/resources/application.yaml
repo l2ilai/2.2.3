@@ -14,3 +14,8 @@ spring:
         show_sql: true
         hbm2ddl:
           auto: create
+
+loan:
+  minimalIncome: 40000
+  priceCar: 1000000
+

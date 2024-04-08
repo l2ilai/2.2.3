@@ -1,10 +1,12 @@
 package com.example._223.service;
 
 import com.example._223.dao.UserRepository;
-import com.example._223.model.Car;
-import com.example._223.model.User;
+import com.example._223.model.entity.Car;
+import com.example._223.model.entity.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -51,6 +53,13 @@ public class UserService {
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void runAfterStartup() {
+        List<User> usersList = getUserWithCar();
+        usersList.forEach(System.out::println);
+        userRepository.saveAll(usersList);
     }
 
 }

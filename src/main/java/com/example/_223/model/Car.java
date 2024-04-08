@@ -2,6 +2,7 @@ package com.example._223.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.Comment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
@@ -12,14 +13,26 @@ import java.util.Random;
 public class Car {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
     @Column
     private Integer price;
 
-    public Car(Integer price) {
-        this.price = price;
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Car() {
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getId() {
@@ -38,8 +51,7 @@ public class Car {
         this.price = price;
     }
 
-    public Car() {
-    }
+
 
     @Override
     public String toString() {
@@ -58,6 +70,6 @@ public class Car {
         if (myRand.nextBoolean()) {
             return null;
         }
-        return new Car(getRandomNumber());
+        return new Car();
     }
 }

@@ -4,19 +4,20 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import static com.example._223.model.Car.getRandomNumber;
+
 @Entity
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column
     private Integer income;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     @PrimaryKeyJoinColumn
-    @NotFound(action= NotFoundAction.IGNORE)
     private Car car;
 
     public Car getCar() {
@@ -25,11 +26,15 @@ public class User {
 
     public void setCar(Car car) {
         this.car = car;
+        if (car != null) {
+            this.car.setId(this.getId());
+            this.car.setPrice(getRandomNumber());
+            this.car.setUser(this);
+        }
     }
 
-    public User(Integer income, Car car) {
+    public User(Integer income) {
         this.income = income;
-        this.car = car;
     }
 
     public User() {

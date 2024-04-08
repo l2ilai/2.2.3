@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -27,8 +28,8 @@ public class UserController {
         return "income";
     }
 
-    @GetMapping("/{id}")
-    public String showUser(@PathVariable Long id, Model model) {
+    @GetMapping("/loan1")
+    public String showUser(@RequestParam("userId") Long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         return "loan";
     }

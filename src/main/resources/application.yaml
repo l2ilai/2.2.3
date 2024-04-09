@@ -17,5 +17,5 @@ spring:
 
 loan:
   minimalIncome: 40_000
-  priceCar: 1_000_000
+  priceCar: 900_000
 

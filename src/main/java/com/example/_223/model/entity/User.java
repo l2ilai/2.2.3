@@ -7,7 +7,6 @@ import static com.example._223.model.entity.Car.getRandomNumber;
 
 @Entity
 @Table(name = "users")
-@Component
 public class User {
 
     @Id
@@ -27,9 +26,6 @@ public class User {
 
     public void setCar(Car car) {
         this.car = car;
-        if (car != null) {
-            this.car.setPrice(getRandomNumber());
-        }
     }
 
     public User(Integer income) {

@@ -14,14 +14,14 @@ import reactor.core.publisher.Flux;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.example._223.model.entity.Car.getNewCarOrNull;
+import static com.example._223.model.entity.Car.getRandomNumber;
+
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private Car car;
 
     public List<User> getUsers() {
         Flux<User> employeeFlux = WebClient
@@ -38,7 +38,14 @@ public class UserService {
     public List<User> getUserWithCar() {
         List<User> users = getUsers();
         return users.stream()
-                .peek(user -> user.setCar(car.getNewCarOrNull()))
+                .peek(user ->
+                {
+                    Car car = getNewCarOrNull();
+                    user.setCar(car);
+                    if (car != null) {
+                        user.getCar().setPrice(getRandomNumber());
+                    }
+                })
                 .collect(Collectors.toList());
     }
 

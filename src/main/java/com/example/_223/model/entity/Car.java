@@ -7,7 +7,6 @@ import java.util.Random;
 
 @Entity
 @Table(name = "cars")
-@Component
 public class Car {
 
     @Id
@@ -63,7 +62,7 @@ public class Car {
         return (int) (Math.random() * 200_000) + 900_000;
     }
 
-    public Car getNewCarOrNull() {
+    public static Car getNewCarOrNull() {
         Random myRand = new Random();
         if (myRand.nextBoolean()) {
             return null;

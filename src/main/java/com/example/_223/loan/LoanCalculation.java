@@ -1,9 +1,14 @@
 package com.example._223.loan;
 
+import com.example._223.model.entity.Car;
 import com.example._223.model.entity.User;
+import com.example._223.service.UserService;
+import org.hibernate.dialect.unique.CreateTableUniqueDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Optional;
 
 
 @Configuration
@@ -11,10 +16,7 @@ import org.springframework.context.annotation.Configuration;
 public class LoanCalculation {
 
     @Autowired
-    private Loan loan;
-
-    @Autowired
-    private User user;
+    private UserService userService;
 
     private Integer minimalIncome;
 
@@ -36,12 +38,36 @@ public class LoanCalculation {
         this.priceCar = priceCar;
     }
 
-    public boolean isApprovedLoan(User user, Integer minimalIncome, Integer priceCar) {
-        return user.getIncome() > minimalIncome || user.getCar().getPrice() > priceCar;
+    public Integer getPriceCarOrZero(Car car) {
+        return Optional.ofNullable(car)
+                .map(Car::getPrice)
+                .orElse(0);
     }
-    public Integer calculateAmountLoan() {
-        //TODO
 
-        return null;
+public Integer getIncomeUserOrZero(User user) {
+        return Optional.ofNullable(user)
+                .map(User::getIncome)
+                .orElse(0);
+    }
+
+    public boolean isApprovedLoan(User user) {
+        return user.getIncome() > minimalIncome || getPriceCarOrZero(user.getCar()) > priceCar;
+    }
+
+
+    public double calculateMaxAmountLoan(User user) {
+        Integer incomeUser = getIncomeUserOrZero(user);
+        double halfAnnualIncome = incomeUser * 6.0;
+        Integer priceCar = getPriceCarOrZero(user.getCar());
+        double thirtyPercentCostCar = priceCar * 0.3;
+        return Math.max(halfAnnualIncome, thirtyPercentCostCar);
+    }
+
+    public double getLoan(Long id) {
+        User user = userService.getUserById(id);
+        if (isApprovedLoan(user)) {
+            return calculateMaxAmountLoan(user);
+        }
+        return 0;
     }
 }

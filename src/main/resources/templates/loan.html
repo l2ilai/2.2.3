@@ -5,24 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-<h1 th:text="${user.income}">Author name</h1>
 <table>
     <thead>
     <tr>
-        <th> ID </th>
-        <th> Income </th>
+        <th> <h2> Одобренная сумма кредита: </h2> </th>
+        <th> <u><h2 th:text="${loanAmount}"></h2> </u></th>
     </tr>
     </thead>
-    <tbody>
-<!--    <tr th:if="${books.empty}">-->
-<!--        <td colspan="2"> No Books Available </td>-->
-<!--    </tr>-->
-
-<!--    <tr th:each="user : ${users}">-->
-<!--        <td><span th:text="${user.id}"> Title </span></td>-->
-<!--        <td><span th:text="${user.income}"> Author </span></td>-->
-<!--    </tr>-->
-    </tbody>
 </table>
 </body>
 </html>

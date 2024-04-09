@@ -51,10 +51,6 @@ public class UserService {
         return userRepository.findById(id).orElseThrow();
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
     @EventListener(ApplicationReadyEvent.class)
     public void runAfterStartup() {
         List<User> usersList = getUserWithCar();

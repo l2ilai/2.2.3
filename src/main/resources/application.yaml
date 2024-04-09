@@ -16,6 +16,6 @@ spring:
           auto: create
 
 loan:
-  minimalIncome: 40000
-  priceCar: 1000000
+  minimalIncome: 40_000
+  priceCar: 1_000_000
 

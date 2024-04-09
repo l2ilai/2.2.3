@@ -5,16 +5,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class Loan {
 
-    private Float amount;
+    private Double amount;
 
     public Loan() {
     }
 
-    public Float getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(Float amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 }

@@ -14,7 +14,7 @@ public class User {
     @Column(name = "id")
     private Long id;
 
-    @Column
+    @Transient
     private Integer income;
 
     @OneToOne(cascade = CascadeType.ALL)

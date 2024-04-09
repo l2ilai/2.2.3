@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -51,7 +52,7 @@ public Integer getIncomeUserOrZero(User user) {
     }
 
     public boolean isApprovedLoan(User user) {
-        return user.getIncome() > minimalIncome || getPriceCarOrZero(user.getCar()) > priceCar;
+        return getIncomeUserOrZero(user) > minimalIncome || getPriceCarOrZero(user.getCar()) > priceCar;
     }
 
 
@@ -64,7 +65,11 @@ public Integer getIncomeUserOrZero(User user) {
     }
 
     public double getLoan(Long id) {
-        User user = userService.getUserById(id);
+        List<User> users = userService.getUsers();
+        User user = users.stream()
+                .filter(u -> u.getId().equals(id))
+                .findFirst()
+                .orElse(null);
         if (isApprovedLoan(user)) {
             return calculateMaxAmountLoan(user);
         }

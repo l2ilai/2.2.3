@@ -57,16 +57,4 @@ public class Car {
                 ", price=" + price +
                 '}';
     }
-
-    public static int getRandomNumber() {
-        return (int) (Math.random() * 200_000) + 900_000;
-    }
-
-    public static Car getNewCarOrNull() {
-        Random myRand = new Random();
-        if (myRand.nextBoolean()) {
-            return null;
-        }
-        return new Car();
-    }
 }

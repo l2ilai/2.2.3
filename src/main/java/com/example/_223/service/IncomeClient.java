@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class UserDtoService {
+public class IncomeClient {
 
     public List<UserDTO> getClient() {
         Flux<UserDTO> employeeFlux = WebClient

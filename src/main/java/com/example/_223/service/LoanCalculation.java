@@ -12,7 +12,7 @@ public class LoanCalculation {
     private LoanProperties loanProperties;
 
     @Autowired
-    private UserDtoService userDtoService;
+    private IncomeClient incomeClient;
 
     @Autowired
     private CarService carService;
@@ -22,7 +22,6 @@ public class LoanCalculation {
                 priceCar > loanProperties.getPriceCar();
     }
 
-
     public double calculateMaxAmountLoan(Integer incomeUser, Integer priceCar) {
         double halfAnnualIncome = incomeUser * 6.0;
         double thirtyPercentCostCar = priceCar * 0.3;
@@ -30,7 +29,7 @@ public class LoanCalculation {
     }
 
     public double getLoan(Long id) {
-        Integer incomeUser = userDtoService.getIncomeUserOrZero(id);
+        Integer incomeUser = incomeClient.getIncomeUserOrZero(id);
         Integer priceCar = carService.getPriceCarOrZero(id);
         if (isApprovedLoan(incomeUser, priceCar)) {
             return calculateMaxAmountLoan(incomeUser, priceCar);

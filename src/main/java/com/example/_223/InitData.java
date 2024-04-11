@@ -1,17 +1,15 @@
 package com.example._223;
 
-import com.example._223.service.UserDtoService;
-import com.example._223.model.entity.Car;
 import com.example._223.model.entity.User;
-import com.example._223.model.mapper.Mapper;
+import com.example._223.mapper.UserMapper;
+import com.example._223.service.IncomeClient;
 import com.example._223.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
-import static com.example._223.service.CarService.getNewCarOrNull;
-import static com.example._223.service.CarService.getRandomNumber;
 
 @Component
 public class InitData {
@@ -20,14 +18,14 @@ public class InitData {
     private UserService userService;
 
     @Autowired
-    private UserDtoService userDtoService;
+    private IncomeClient incomeClient;
 
     @Autowired
-    private Mapper mapper;
+    private UserMapper userMapper;
 
     public List<User> getUserWithCar() {
-        return userDtoService.getClient().stream()
-                .map(mapper::toUser)
+        return incomeClient.getClient().stream()
+                .map(userMapper::toUser)
                 .peek(userService::setCarForUser)
                 .toList();
     }
